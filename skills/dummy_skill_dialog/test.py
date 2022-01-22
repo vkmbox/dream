@@ -49,8 +49,14 @@ def main_test():
         "oh well, maybe it'll be good, if not kids still have teen titans! haha, well it was nice talking "
         "to you, i've gotta run now, bye!",
     ]
+    
+    #cnt = 1
+    #for tmp in sliced_data:
+    #    import common.test_utils as t_utils; t_utils.save_to_test(tmp,"tests/data"+str(cnt)+"_in.json",indent=4)
+    #    cnt += 1
 
     for response, gold_phrase in zip(responses, gold_phrases):
+#        print(f"Checking {gold_phrase}")
         assert response == gold_phrase, print(f"Expect: {gold_phrase}. Got: {response}.")
 
 
