@@ -7,8 +7,12 @@ logger = logging.getLogger(__name__)
 # ....
 
 
-def example_response(reply: str):
-    def example_response_handler(ctx: Context, actor: Actor, *args, **kwargs) -> str:
-        return reply
+def batch_processing_response(ctx: Context, actor: Actor, *args, **kwargs) -> str: 
 
-    return example_response_handler
+    response = ""
+    return response
+
+def batch_processing_confidence(ctx: Context, actor: Actor, *args, **kwargs) -> Context:
+    _, confidence = get_detected_intents(int_ctx.get_last_human_utterance(ctx, actor))
+    int_ctx.set_confidence(ctx, actor, confidence)
+    return ctx
