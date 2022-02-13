@@ -1,4 +1,5 @@
-FROM python:3.9.1
+#FROM python:3.9.1
+FROM tensorflow/tensorflow:1.14.0-py3
 # ###################### IMMUTABLE SECTION ######################################
 # Do not change anything in this section 
 WORKDIR /src
@@ -8,6 +9,16 @@ RUN pip install -r requirements.txt
 
 # ###################### CUSTOM SECTION ######################################
 # Here you can make changes 
+
+ARG DATA_URL
+ENV DATA_URL ${DATA_URL}
+ADD $DATA_URL /root/model/
+RUN tar -xvzf /root/model/*.tar.gz -C /root/model
+
+ENV MODEL_PATH /root/model/convert_single_context
+ENV TOPIC_DIALOGS_PATH /root/model/dialogs_topic.json
+ENV NP_DIALOGS_PATH /root/model/dialogs_np.json
+COPY . .
 
 ARG SERVICE_NAME
 ENV SERVICE_NAME ${SERVICE_NAME}
@@ -24,6 +35,5 @@ ENV SERVICE_PORT ${SERVICE_PORT}
 
 # wait for a server answer ( INTERVAL + TIMEOUT ) * RETRIES seconds after that change stutus to unhealthy
 HEALTHCHECK --interval=5s --timeout=5s --retries=3 CMD curl --fail 127.0.0.1:${SERVICE_PORT}/healthcheck || exit 1
-
 
 CMD gunicorn --workers=1 server:app -b 0.0.0.0:${SERVICE_PORT}

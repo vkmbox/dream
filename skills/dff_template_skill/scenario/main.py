@@ -7,7 +7,7 @@ import df_engine.conditions as cnd
 import df_engine.labels as lbl
 
 import common.dff.integration.processing as int_prs
-import common.dff.integration.response as int_rsp
+#import common.dff.integration.response as int_rsp
 
 
 import common.constants as common_constants
@@ -29,9 +29,9 @@ flows = {
     "active_skill_driven_response": {
         "dialogs_batch_processing": {
             RESPONSE: loc_rsp.batch_processing_response,
-            PROCESSING: {"set_confidence": loc_rsp.batch_processing_confidence},
+            TRANSITIONS: {lbl.repeat(): cnd.true()},
         },
     }
 }
 
-actor = Actor(flows, start_label=("sevice", "start"), fallback_label=("sevice", "fallback"))
+actor = Actor(flows, start_label=("service", "start"), fallback_label=("service", "fallback"))
