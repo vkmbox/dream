@@ -11,8 +11,7 @@ import common.dff.integration.processing as int_prs
 
 
 import common.constants as common_constants
-
-from . import response as loc_rsp
+import scenario.response as rsp
 
 logger = logging.getLogger(__name__)
 
@@ -28,7 +27,7 @@ flows = {
     },
     "active_skill_driven_response": {
         "dialogs_batch_processing": {
-            RESPONSE: loc_rsp.batch_processing_response,
+            RESPONSE: rsp.batch_processing_response,
             TRANSITIONS: {lbl.repeat(): cnd.true()},
         },
     }
